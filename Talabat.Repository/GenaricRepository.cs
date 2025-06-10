@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Talabat.Core.Repositories;
+using Talabat.Core.Specifications;
+using Talabat.Infrastructure;
 using Talabat.Repository.Data;
 
 namespace Talabat.Repository
@@ -16,10 +18,21 @@ namespace Talabat.Repository
         {
             return await _dbcontext.Set<T>().ToListAsync();
         }
-
         public async Task<T?> GetAsync(int id)
         {
             return await _dbcontext.Set<T>().FindAsync(id);
+        }
+        public async Task<IEnumerable<T>> GetAllWithSpecAsync(Ispecifications<T> spec)
+        {
+            return await ApplySpecifications(spec).AsNoTracking().ToListAsync();
+        }
+        public async Task<T?> GetWithSpecAsync(Ispecifications<T> spec)
+        {
+            return await ApplySpecifications(spec).FirstOrDefaultAsync();
+        }
+        private IQueryable<T> ApplySpecifications(Ispecifications<T> spec)
+        {
+            return SpecificationsEvaluater<T>.GetQuery(_dbcontext.Set<T>(), spec);
         }
     }
 }
