@@ -10,6 +10,10 @@ namespace Talabat.Infrastructure
             var query = inputQuery.AsQueryable();//_dbcontext.set<TEntity>
             if (spec.Criteria is not null)
                 query = query.Where(spec.Criteria);//query=_dbcontext.set<TEntity>.Where(E=>E.id==1)
+            if (spec.OrderBy is not null)
+                query = query.OrderBy(spec.OrderBy);
+            if (spec.OrderByDesc is not null)
+                query = query.OrderByDescending(spec.OrderByDesc);
 
             query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
             return query;
