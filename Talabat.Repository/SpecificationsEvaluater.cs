@@ -12,11 +12,13 @@ namespace Talabat.Infrastructure
                 query = query.Where(spec.Criteria);//query=_dbcontext.set<TEntity>.Where(E=>E.id==1)
             if (spec.OrderBy is not null)
                 query = query.OrderBy(spec.OrderBy);
-            if (spec.OrderByDesc is not null)
+            else if (spec.OrderByDesc is not null)
                 query = query.OrderByDescending(spec.OrderByDesc);
-
+            if (spec.IsPaginationEnabled)
+                query = query.Skip(spec.Skip).Take(spec.Take);
             query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
             return query;
+
         }
     }
 }

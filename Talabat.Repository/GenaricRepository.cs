@@ -30,9 +30,16 @@ namespace Talabat.Repository
         {
             return await ApplySpecifications(spec).FirstOrDefaultAsync();
         }
+
+        public async Task<int> GetCountAsync(Ispecifications<T> spec)
+        {
+            return await ApplySpecifications(spec).CountAsync();
+        }
         private IQueryable<T> ApplySpecifications(Ispecifications<T> spec)
         {
             return SpecificationsEvaluater<T>.GetQuery(_dbcontext.Set<T>(), spec);
         }
+
+
     }
 }
