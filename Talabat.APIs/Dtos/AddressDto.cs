@@ -1,14 +1,18 @@
-﻿namespace Talabat.Core.Entityies.Identity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Talabat.APIs.Dtos
 {
-    public class Address
+    public class AddressDto
     {
-        public int Id { get; set; }
+        [Required]
         public string FName { get; set; }
+        [Required]
         public string LName { get; set; }
+        [Required]
         public string Street { get; set; }
+        [Required]
         public string City { get; set; }
-        public string AppUserId { get; set; }// Foreign Key :User
-        public AppUser User { get; set; }
+        [Required]
         public string Country { get; set; }
     }
 }

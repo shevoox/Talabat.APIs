@@ -39,7 +39,7 @@ namespace Talabat.APIs
             });
             builder.Services.AddIdentity<AppUser, IdentityRole>(options => { }).AddEntityFrameworkStores<AppIdentityDbContext>();
 
-            builder.Services.AddApplicationServices();
+            builder.Services.AddApplicationServices(builder.Configuration);
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
             {
@@ -62,6 +62,7 @@ namespace Talabat.APIs
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
