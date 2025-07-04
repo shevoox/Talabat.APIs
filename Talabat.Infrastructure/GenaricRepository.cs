@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Talabat.Core.Repositories;
 using Talabat.Core.Specifications;
-using Talabat.Infrastructure;
-using Talabat.Repository.Data;
+using Talabat.Infrastructure.Data;
 
-namespace Talabat.Repository
+namespace Talabat.Infrastructure
 {
     public class GenaricRepository<T> : IGenaricRepository<T> where T : class
     {
@@ -40,6 +39,13 @@ namespace Talabat.Repository
             return SpecificationsEvaluater<T>.GetQuery(_dbcontext.Set<T>(), spec);
         }
 
+        public async Task AddAsync(T entiy)
+            => await _dbcontext.AddAsync(entiy);
 
+        public void Update(T entiy)
+            => _dbcontext.Update(entiy);
+
+        public void Delete(T entiy)
+            => _dbcontext.Remove(entiy);
     }
 }

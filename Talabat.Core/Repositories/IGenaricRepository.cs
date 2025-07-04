@@ -9,5 +9,8 @@ namespace Talabat.Core.Repositories
         Task<T?> GetWithSpecAsync(Ispecifications<T> spec);
         Task<IEnumerable<T>> GetAllWithSpecAsync(Ispecifications<T> spec);
         Task<int> GetCountAsync(Ispecifications<T> spec);
+        Task AddAsync(T entiy);
+        void Update(T entiy);
+        void Delete(T entiy);
     }
 }

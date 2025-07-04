@@ -70,7 +70,7 @@ namespace Talabat.APIs.Controllers
         }
 
         [Authorize]
-        [HttpGet]// Get :/api/accounts/getcurrentuser
+        [HttpGet("current-user")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
@@ -107,8 +107,8 @@ namespace Talabat.APIs.Controllers
             return Ok(updateaddress);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<bool>> CheckEmailExists(string email)
+        [HttpGet("emailexists")]
+        public async Task<ActionResult<bool>> CheckEmailExists([FromQuery] string email)
         {
             return await _userManager.FindByEmailAsync(email) is not null;
         }

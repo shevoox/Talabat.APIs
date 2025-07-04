@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 using Talabat.APIs.Extensions;
 using Talabat.Core.Entityies.Identity;
+using Talabat.Infrastructure.Data;
 using Talabat.Infrastructure.Identity;
-using Talabat.Repository.Data;
 
 namespace Talabat.APIs
 {
@@ -44,13 +44,27 @@ namespace Talabat.APIs
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 
-                var _identityDbContext = services.GetRequiredService<AppIdentityDbContext>();
-                await _identityDbContext.Database.MigrateAsync();
+                try
+                {
+                    var storeContext = services.GetRequiredService<StoreContext>();
+                    await storeContext.Database.MigrateAsync();
+                    await StoreContextSeed.SeedAsync(storeContext);
 
-                var _userManager = services.GetRequiredService<UserManager<AppUser>>();
-                await AppIdentityDbContexSeed.SeedUserAsync(_userManager);
+                    var identityDbContext = services.GetRequiredService<AppIdentityDbContext>();
+                    await identityDbContext.Database.MigrateAsync();
+
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                    await AppIdentityDbContexSeed.SeedUserAsync(userManager);
+                }
+                catch (Exception ex)
+                {
+                    var logger = loggerFactory.CreateLogger<Program>();
+                    logger.LogError(ex, "An error occurred during migration or seeding");
+                }
             }
+
             // Configure the HTTP request pipeline.
 
             //app.UseMiddleware<ExceptionMiddleware>();
