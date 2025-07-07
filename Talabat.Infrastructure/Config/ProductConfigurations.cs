@@ -13,6 +13,8 @@ namespace Talabat.Infrastructure.Config
             builder.Property(p => p.PictureUrl).IsRequired().HasMaxLength(100);
             builder.HasOne(p => p.Brand).WithMany().HasForeignKey(p => p.BrandId);
             builder.HasOne(p => p.Category).WithMany().HasForeignKey(p => p.CategoryId);
+            builder.Property(p => p.Price).HasPrecision(18, 2);
+
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Talabat.Core.Entityies.Order_Aggregate
         public Adreess ShippingAddress { get; set; }
         /*public int? DeliveryMethodId { get; set; }*///foreign key one to one delivary optional
         public DeliveryMethod DeliveryMethod { get; set; } //navigation prop [one]
-        ICollection<OrderItem> Items { get; set; } = new HashSet<OrderItem>(); //navigation prop [many]
+        public ICollection<OrderItem> Items { get; set; } = new HashSet<OrderItem>(); //navigation prop [many]
         public decimal Subtotal { get; set; }//totalItem X quantity
 
         //[NotMapped]

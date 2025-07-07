@@ -13,7 +13,9 @@ namespace Talabat.Infrastructure.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             //modelBuilder.ApplyConfiguration(new ProductConfigurations());
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
         public DbSet<Product> Products { get; set; }

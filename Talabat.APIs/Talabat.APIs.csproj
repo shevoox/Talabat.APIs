@@ -5,6 +5,20 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Data\Data Seeding JSON Files\brands.json" />
+    <Content Remove="Data\Data Seeding JSON Files\categories.json" />
+    <Content Remove="Data\Data Seeding JSON Files\delivery.json" />
+    <Content Remove="Data\Data Seeding JSON Files\products.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Data\Data Seeding JSON Files\brands.json" />
+    <None Include="Data\Data Seeding JSON Files\categories.json" />
+    <None Include="Data\Data Seeding JSON Files\delivery.json" />
+    <None Include="Data\Data Seeding JSON Files\products.json" />
+  </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.4" />

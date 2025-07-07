@@ -94,6 +94,9 @@ namespace Talabat.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -101,6 +104,8 @@ namespace Talabat.Infrastructure.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
                 });
@@ -135,6 +140,7 @@ namespace Talabat.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -229,6 +235,10 @@ namespace Talabat.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Talabat.Core.Entityies.Order_Aggregate.OrderItem", b =>
                 {
+                    b.HasOne("Talabat.Core.Entityies.Order_Aggregate.Order", null)
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId");
+
                     b.OwnsOne("Talabat.Core.Entityies.Order_Aggregate.ProductItemOrdered", "Product", b1 =>
                         {
                             b1.Property<int>("OrderItemId")
@@ -274,6 +284,11 @@ namespace Talabat.Infrastructure.Data.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Talabat.Core.Entityies.Order_Aggregate.Order", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }
